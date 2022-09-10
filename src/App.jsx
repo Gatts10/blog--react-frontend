@@ -9,7 +9,7 @@ function App() {
       <TopBar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/post/:postId" element={<Single />} />
+        <Route path="/posts/:id" element={<Single />} />
       </Routes>
     </>
   );

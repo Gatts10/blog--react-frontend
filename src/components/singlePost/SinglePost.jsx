@@ -1,49 +1,33 @@
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import "./singlePost.css";
-import IMG from "../../assets/postImg.jpg";
 
 export default function SinglePost() {
+  const { id } = useParams();
+  const [post, setPost] = useState([]);
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      const res = await axios.get(`${import.meta.env.VITE_API}/posts/` + id);
+      setPost(res.data);
+      console.log(res.data);
+    };
+    fetchPost();
+  }, [id]);
+
   return (
     <div className="singlePost">
       <div className="singlePostWrapper">
-        <img className="singlePostImg" src={IMG} alt="postImg" />
-        <h1 className="singlePostTitle">Quis sunt id minim quis duis</h1>
+        <img className="singlePostImg" src={post.thumbnail} alt="postImg" />
+        <h1 className="singlePostTitle">{post.title}</h1>
         <div className="singlePostInfo">
           <span className="singlePostAuthor">
             Author: <b>Admin</b>
           </span>
-          <span className="singlePostDate">1 hour ago</span>
+          <span className="singlePostDate">{post.created_at}</span>
         </div>
-        <p className="singlePostDesc">
-          Veniam ad esse occaecat ipsum quis nisi sit sint esse duis pariatur
-          nulla. Nostrud amet mollit non elit do do mollit esse. Exercitation
-          excepteur nisi do aliquip non. Nulla sint proident ea aliqua laboris
-          in duis enim qui. Elit labore amet adipisicing officia veniam fugiat
-          quis ex voluptate deserunt reprehenderit dolor non mollit. Esse minim
-          mollit amet ipsum do veniam veniam laborum. Veniam ad esse occaecat
-          ipsum quis nisi sit sint esse duis pariatur nulla. Nostrud amet mollit
-          non elit do do mollit esse. Exercitation excepteur nisi do aliquip
-          non. Nulla sint proident ea aliqua laboris in duis enim qui. Elit
-          labore amet adipisicing officia veniam fugiat quis ex voluptate
-          deserunt reprehenderit dolor non mollit. Esse minim mollit amet ipsum
-          do veniam veniam laborum. Veniam ad esse occaecat ipsum quis nisi sit
-          sint esse duis pariatur nulla. Nostrud amet mollit non elit do do
-          mollit esse. Exercitation excepteur nisi do aliquip non. Nulla sint
-          proident ea aliqua laboris in duis enim qui. Elit labore amet
-          adipisicing officia veniam fugiat quis ex voluptate deserunt
-          reprehenderit dolor non mollit. Esse minim mollit amet ipsum do veniam
-          veniam laborum. Veniam ad esse occaecat ipsum quis nisi sit sint esse
-          duis pariatur nulla. Nostrud amet mollit non elit do do mollit esse.
-          Exercitation excepteur nisi do aliquip non. Nulla sint proident ea
-          aliqua laboris in duis enim qui. Elit labore amet adipisicing officia
-          veniam fugiat quis ex voluptate deserunt reprehenderit dolor non
-          mollit. Esse minim mollit amet ipsum do veniam veniam laborum. Veniam
-          ad esse occaecat ipsum quis nisi sit sint esse duis pariatur nulla.
-          Nostrud amet mollit non elit do do mollit esse. Exercitation excepteur
-          nisi do aliquip non. Nulla sint proident ea aliqua laboris in duis
-          enim qui. Elit labore amet adipisicing officia veniam fugiat quis ex
-          voluptate deserunt reprehenderit dolor non mollit. Esse minim mollit
-          amet ipsum do veniam veniam laborum.
-        </p>
+        <p className="singlePostDesc">{post.content}</p>
       </div>
     </div>
   );
