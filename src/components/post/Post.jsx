@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
+import parse from "html-react-parser";
 import "./post.css";
 
 export default function Post({ post }) {
   const categories = [post.category];
+  const content = `${post.content}`;
 
   return (
     <div className="post">
@@ -23,7 +25,7 @@ export default function Post({ post }) {
         <hr />
         <span className="postDate">{post.created_at}</span>
       </div>
-      <p className="postDesc">{post.content}</p>
+      <p className="postDesc">{parse(content)}</p>
     </div>
   );
 }

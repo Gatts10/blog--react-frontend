@@ -1,20 +1,22 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import parse from "html-react-parser";
 import "./singlePost.css";
 
 export default function SinglePost() {
   const { id } = useParams();
-  const [post, setPost] = useState([]);
+  const [post, setPost] = useState({});
 
   useEffect(() => {
     const fetchPost = async () => {
       const res = await axios.get(`${import.meta.env.VITE_API}/posts/` + id);
       setPost(res.data);
-      console.log(res.data);
     };
     fetchPost();
   }, [id]);
+
+  const content = `${post.content}`
 
   return (
     <div className="singlePost">
@@ -27,7 +29,7 @@ export default function SinglePost() {
           </span>
           <span className="singlePostDate">{post.created_at}</span>
         </div>
-        <p className="singlePostDesc">{post.content}</p>
+        <div className="singlePostDesc">{parse(content)}</div>
       </div>
     </div>
   );
