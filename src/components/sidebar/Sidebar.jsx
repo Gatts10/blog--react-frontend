@@ -3,7 +3,7 @@ import axios from "axios";
 import "./sidebar.css";
 import IMG from "../../assets/aboutImg.jpg";
 
-export default function Sidebar() {
+export default function Sidebar({ handleCategoryId }) {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -31,7 +31,11 @@ export default function Sidebar() {
         <span className="sidebarTitle">CATEGORIES</span>
         <ul className="sidebarList">
           {categories.map((category) => (
-            <li className="sidebarListItem" key={category.id}>
+            <li
+              className="sidebarListItem"
+              key={category.id}
+              onClick={() => handleCategoryId(category.id)}
+            >
               {category.name}
             </li>
           ))}

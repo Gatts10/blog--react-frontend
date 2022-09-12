@@ -5,23 +5,31 @@ import Posts from "../../components/posts/Posts";
 import Sidebar from "../../components/sidebar/Sidebar";
 import "./home.css";
 
-export default function Home() {
+export default function Home(props) {
   const [posts, setPosts] = useState([]);
+
+  const [categoryId, setCategoryId] = useState("");
+
+  const handleCategoryId = (id) => {
+    setCategoryId(id);
+  };
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = await axios.get(`${import.meta.env.VITE_API}/posts`);
+      const res = await axios.get(
+        `${import.meta.env.VITE_API}/posts?category=` + categoryId
+      );
       setPosts(res.data);
     };
     fetchPosts();
-  }, []);
+  }, [categoryId]);
 
   return (
     <>
       <Header />
       <div className="home">
         <Posts posts={posts} />
-        <Sidebar />
+        <Sidebar handleCategoryId={handleCategoryId} />
       </div>
     </>
   );

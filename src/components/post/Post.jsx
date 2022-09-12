@@ -25,7 +25,7 @@ export default function Post({ post }) {
         <hr />
         <span className="postDate">{post.created_at}</span>
       </div>
-      <p className="postDesc">{parse(content)}</p>
+      <div className="postDesc"><p>{parse(content)}</p></div>
     </div>
   );
 }
