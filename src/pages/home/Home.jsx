@@ -1,3 +1,4 @@
+import { useLocation } from "react-router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Header from "../../components/header/Header";
@@ -5,31 +6,26 @@ import Posts from "../../components/posts/Posts";
 import Sidebar from "../../components/sidebar/Sidebar";
 import "./home.css";
 
-export default function Home(props) {
+export default function Home() {
   const [posts, setPosts] = useState([]);
-
-  const [categoryId, setCategoryId] = useState("");
-
-  const handleCategoryId = (id) => {
-    setCategoryId(id);
-  };
+  const { search } = useLocation();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = await axios.get(
-        `${import.meta.env.VITE_API}/posts?category=` + categoryId
-      );
+      const res = await axios.get(`${import.meta.env.VITE_API}/posts` + search);
       setPosts(res.data);
+      setLoading(false);
     };
     fetchPosts();
-  }, [categoryId]);
+  }, [search]);
 
   return (
     <>
       <Header />
       <div className="home">
-        <Posts posts={posts} />
-        <Sidebar handleCategoryId={handleCategoryId} />
+        <Posts posts={posts} loading={loading} />
+        <Sidebar />
       </div>
     </>
   );

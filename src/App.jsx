@@ -8,7 +8,7 @@ function App() {
     <>
       <TopBar />
       <Routes>
-        <Route path="/" element={<Home />} />s
+        <Route path="/" element={<Home />} />
         <Route path="/posts/:id" element={<Single />} />
       </Routes>
     </>

@@ -11,9 +11,7 @@ export default function TopBar() {
               Home
             </Link>
           </li>
-          <li className="topListItem">Home</li>
-          <li className="topListItem">Home</li>
-          <li className="topListItem">Home</li>
+          <li className="topListItem">Events</li>
         </ul>
       </div>
     </div>

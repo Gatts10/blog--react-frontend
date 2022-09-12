@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import "./sidebar.css";
 import IMG from "../../assets/aboutImg.jpg";
 
-export default function Sidebar({ handleCategoryId }) {
+export default function Sidebar() {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -31,13 +32,13 @@ export default function Sidebar({ handleCategoryId }) {
         <span className="sidebarTitle">CATEGORIES</span>
         <ul className="sidebarList">
           {categories.map((category) => (
-            <li
-              className="sidebarListItem"
+            <Link
+              to={`/?category=${category.id}`}
               key={category.id}
-              onClick={() => handleCategoryId(category.id)}
+              className="link"
             >
-              {category.name}
-            </li>
+              <li className="sidebarListItem">{category.name}</li>
+            </Link>
           ))}
         </ul>
       </div>
