@@ -11,7 +11,11 @@ export default function TopBar() {
               Home
             </Link>
           </li>
-          <li className="topListItem">Events</li>
+          <li className="topListItem">
+            <Link to="/events" className="link">
+              Events
+            </Link>
+          </li>
         </ul>
       </div>
     </div>

@@ -35,9 +35,22 @@ export default function SinglePost() {
             <span className="singlePostAuthor">
               Author: <b>Admin</b>
             </span>
-            <span className="singlePostDate">{post.created_at}</span>
+            <span className="singlePostDate">{post.published_at}</span>
           </div>
           <div className="singlePostDesc">{parse(content)}</div>
+          <div className="singlePostEvent">
+            <span>
+              Event Related <br />
+              <Link to={`/events/${post.event_id}`} className="link">
+                <button
+                  type="button"
+                  className="btn btn-dark singlePostEventBtn"
+                >
+                  {post.event.name}
+                </button>
+              </Link>
+            </span>
+          </div>
           <div className="singlePostInfo">
             <span className="singlePostAuthor">
               Category:{" "}

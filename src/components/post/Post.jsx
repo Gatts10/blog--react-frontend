@@ -20,7 +20,7 @@ export default function Post({ post }) {
           </Link>
         </span>
         <hr />
-        <span className="postDate">{post.created_at}</span>
+        <span className="postDate">{post.published_at}</span>
       </div>
       <div className="postDesc">{parse(content)}</div>
     </div>

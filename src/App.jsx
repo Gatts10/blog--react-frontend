@@ -1,6 +1,7 @@
-import Home from "./pages/home/Home";
 import TopBar from "./components/topbar/TopBar";
-import Single from "./pages/single/Single";
+import Home from "./pages/home/Home";
+import EventPage from "./pages/eventPage/EventPage";
+import SinglePostPage from "./pages/singlePostPage/SinglePostPage";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
@@ -9,7 +10,8 @@ function App() {
       <TopBar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/posts/:id" element={<Single />} />
+        <Route path="/events" element={<EventPage />} />
+        <Route path="/posts/:id" element={<SinglePostPage />} />
       </Routes>
     </>
   );
