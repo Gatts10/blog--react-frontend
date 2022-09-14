@@ -12,7 +12,7 @@ export default function Events({ events, loading }) {
         </div>
       ) : (
         <div className="events">
-          {events.map((event) => (
+          {events.data.map((event) => (
             <Event key={event.id} event={event} />
           ))}
         </div>

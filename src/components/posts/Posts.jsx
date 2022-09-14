@@ -12,7 +12,7 @@ export default function Posts({ posts, loading }) {
         </div>
       ) : (
         <div className="posts">
-          {posts.map((post) => (
+          {posts.data.map((post) => (
             <Post key={post.id} post={post} />
           ))}
         </div>
