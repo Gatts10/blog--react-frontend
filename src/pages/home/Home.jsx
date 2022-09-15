@@ -24,7 +24,15 @@ export default function Home() {
     <>
       <Header />
       <div className="home">
-        <Posts posts={posts} loading={loading} />
+        {loading ? (
+          <div className="posts">
+            <div className="spinner-border loading" role="status">
+              <span className="sr-only">Loading...</span>
+            </div>
+          </div>
+        ) : (
+          <Posts posts={posts} />
+        )}
         <Sidebar />
       </div>
     </>

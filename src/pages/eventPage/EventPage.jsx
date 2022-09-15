@@ -22,7 +22,15 @@ export default function EventPage() {
     <>
       <Header />
       <div className="eventPage">
-        <Events events={events} loading={loading} />
+        {loading ? (
+          <div className="events">
+            <div className="spinner-border loading" role="status">
+              <span className="sr-only">Loading...</span>
+            </div>
+          </div>
+        ) : (
+          <Events events={events} />
+        )}
         <Sidebar />
       </div>
     </>
