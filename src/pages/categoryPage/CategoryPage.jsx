@@ -1,31 +1,36 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import Header from "../../components/header/Header";
-import Events from "../../components/events/Events";
+import Posts from "../../components/posts/Posts";
 import Sidebar from "../../components/sidebar/Sidebar";
-import "./eventPage.css";
+import "./categoryPage.css";
 
-export default function EventPage() {
-  const [events, setEvents] = useState([]);
+export default function Home() {
+  //props from link categories
+  const { state } = useLocation();
+  const { search } = state;
+  //
+  const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pageNumber, setPageNumber] = useState(1);
 
   useEffect(() => {
-    const fetchEvents = async () => {
+    const fetchPosts = async () => {
       const res = await axios.get(
         `${
           import.meta.env.VITE_API
-        }/events?page=${pageNumber}`
+        }/posts?page=${pageNumber}&category=${search}`
       );
-      setEvents(res.data);
+      setPosts(res.data);
       setLoading(false);
     };
-    fetchEvents();
-  }, [pageNumber]);
+    fetchPosts();
+  }, [pageNumber, search]);
 
-  const eventsPerPage = events.meta?.per_page;
-  const pageCount = Math.ceil(events.meta?.total / eventsPerPage);
+  const postsPerPage = posts.meta?.per_page;
+  const pageCount = Math.ceil(posts.meta?.total / postsPerPage);
 
   const handlePageClick = ({ selected }) => {
     setPageNumber(selected + 1);
@@ -43,7 +48,7 @@ export default function EventPage() {
           </div>
         ) : (
           <div>
-            <Events events={events} />
+            <Posts posts={posts} />
             <ReactPaginate
               nextLabel="next >"
               onPageChange={handlePageClick}

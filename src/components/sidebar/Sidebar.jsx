@@ -33,7 +33,8 @@ export default function Sidebar() {
         <ul className="sidebarList">
           {categories.map((category) => (
             <Link
-              to={`/?category=${category.id}`}
+              to="/categories"
+              state={{ search: category.id }}
               key={category.id}
               className="link"
             >
