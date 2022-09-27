@@ -7,6 +7,8 @@ export default function SingleEvent() {
   const { id } = useParams();
   const [event, setEvent] = useState({});
   const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [slideNumber, setSlideNumber] = useState(0);
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -17,6 +19,25 @@ export default function SingleEvent() {
     fetchEvent();
   }, [id]);
 
+  const handleOpen = (index) => {
+    setOpen(true);
+    setSlideNumber(index);
+  };
+
+  const handleMove = (direction) => {
+    let newSlideNumber;
+
+    if (direction === "l") {
+      newSlideNumber =
+        slideNumber === 0 ? event.images.length - 1 : slideNumber - 1;
+    } else {
+      newSlideNumber =
+        slideNumber === event.images.length - 1 ? 0 : slideNumber + 1;
+    }
+
+    setSlideNumber(newSlideNumber);
+  };
+
   return (
     <>
       {loading ? (
@@ -25,6 +46,29 @@ export default function SingleEvent() {
         </div>
       ) : (
         <div className="singleEventWrapper">
+          {open && (
+            <div className="singleEventSlider">
+              <i
+                className="fa-solid fa-circle-xmark singleEventIconClose"
+                onClick={() => setOpen(false)}
+              ></i>
+              <i
+                className="fa-solid fa-circle-arrow-left singleEventIconArrow"
+                onClick={() => handleMove("l")}
+              ></i>
+              <div className="singleEventSliderWrapper">
+                <img
+                  src={event.images[slideNumber]}
+                  alt={`postImg-${slideNumber}`}
+                  className="singleEventSliderImg"
+                />
+              </div>
+              <i
+                className="fa-solid fa-circle-arrow-right singleEventIconArrow"
+                onClick={() => handleMove("r")}
+              ></i>
+            </div>
+          )}
           <div className="singleEventCentered">
             <img
               className="singleEventImg singleEventOpacity"
@@ -36,11 +80,15 @@ export default function SingleEvent() {
           </div>
           <div className="singleEventArray">
             {event.images.map((item, index) => (
-              <div key={index} className="singleEventArrayImgs col-sm-12 col-xl-4">
+              <div
+                key={index}
+                className="singleEventArrayImgs col-sm-12 col-xl-4"
+              >
                 <img
                   className="singleEventArrayImg"
                   src={item}
                   alt={`postImg-${index}`}
+                  onClick={() => handleOpen(index)}
                 />
               </div>
             ))}
