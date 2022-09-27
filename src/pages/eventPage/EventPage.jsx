@@ -4,7 +4,6 @@ import ReactPaginate from "react-paginate";
 import Header from "../../components/header/Header";
 import Events from "../../components/events/Events";
 import Sidebar from "../../components/sidebar/Sidebar";
-import "./eventPage.css";
 
 export default function EventPage() {
   const [events, setEvents] = useState([]);
@@ -14,9 +13,7 @@ export default function EventPage() {
   useEffect(() => {
     const fetchEvents = async () => {
       const res = await axios.get(
-        `${
-          import.meta.env.VITE_API
-        }/events?page=${pageNumber}`
+        `${import.meta.env.VITE_API}/events?page=${pageNumber}`
       );
       setEvents(res.data);
       setLoading(false);
@@ -34,39 +31,41 @@ export default function EventPage() {
   return (
     <>
       <Header />
-      <div className="home">
-        {loading ? (
-          <div className="posts">
-            <div className="spinner-border loading" role="status">
-              <span className="sr-only">Loading...</span>
+      <div className="container-fluid">
+        <div className="row">
+          {loading ? (
+            <div className="posts">
+              <div className="spinner-border loading" role="status">
+                <span className="sr-only">Loading...</span>
+              </div>
             </div>
-          </div>
-        ) : (
-          <div>
-            <Events events={events} />
-            <ReactPaginate
-              nextLabel="next >"
-              onPageChange={handlePageClick}
-              pageRangeDisplayed={3}
-              marginPagesDisplayed={2}
-              pageCount={pageCount}
-              previousLabel="< previous"
-              pageClassName="page-item"
-              pageLinkClassName="page-link"
-              previousClassName="page-item"
-              previousLinkClassName="page-link"
-              nextClassName="page-item"
-              nextLinkClassName="page-link"
-              breakLabel="..."
-              breakClassName="page-item"
-              breakLinkClassName="page-link"
-              containerClassName="pagination"
-              activeClassName={"active"}
-              renderOnZeroPageCount={null}
-            />
-          </div>
-        )}
-        <Sidebar />
+          ) : (
+            <div className="col-sm-12 col-md-8 mx-auto">
+              <Events events={events} />
+              <ReactPaginate
+                nextLabel="next >"
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={3}
+                marginPagesDisplayed={2}
+                pageCount={pageCount}
+                previousLabel="< previous"
+                pageClassName="page-item"
+                pageLinkClassName="page-link"
+                previousClassName="page-item"
+                previousLinkClassName="page-link"
+                nextClassName="page-item"
+                nextLinkClassName="page-link"
+                breakLabel="..."
+                breakClassName="page-item"
+                breakLinkClassName="page-link"
+                containerClassName="pagination"
+                activeClassName={"active"}
+                renderOnZeroPageCount={null}
+              />
+            </div>
+          )}
+          <Sidebar className="col-4 mx-auto" />
+        </div>
       </div>
     </>
   );

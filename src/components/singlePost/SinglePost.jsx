@@ -22,7 +22,7 @@ export default function SinglePost() {
   const content = `${post.content}`;
 
   return (
-    <div className="singlePost">
+    <>
       {loading ? (
         <div className="spinner-border loading" role="status">
           <span className="sr-only">Loading...</span>
@@ -33,7 +33,7 @@ export default function SinglePost() {
           <h1 className="singlePostTitle">{post.title}</h1>
           <div className="singlePostInfo">
             <span className="singlePostAuthor">
-              Author: <b>Admin</b>
+              Author: <b>{post.author.name}</b>
             </span>
             <span className="singlePostDate">{post.published_at}</span>
           </div>
@@ -69,6 +69,6 @@ export default function SinglePost() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }

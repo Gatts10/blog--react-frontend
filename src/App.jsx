@@ -3,6 +3,7 @@ import Home from "./pages/home/Home";
 import EventPage from "./pages/eventPage/EventPage";
 import CategoryPage from "./pages/categoryPage/CategoryPage";
 import SinglePostPage from "./pages/singlePostPage/SinglePostPage";
+import SingleEventPage from "./pages/singleEventPage/SingleEventPage";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <Route path="/events" element={<EventPage />} />
         <Route path="/categories" element={<CategoryPage />} />
         <Route path="/posts/:id" element={<SinglePostPage />} />
+        <Route path="/events/:id" element={<SingleEventPage />} />
       </Routes>
     </>
   );
