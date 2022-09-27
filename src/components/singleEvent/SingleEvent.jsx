@@ -1,12 +1,14 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useMediaQuery } from "@react-hook/media-query";
 import "./singleEvent.css";
 
 export default function SingleEvent() {
   const { id } = useParams();
   const [event, setEvent] = useState({});
   const [loading, setLoading] = useState(true);
+  const [slider, setSlider] = useState(false);
   const [open, setOpen] = useState(false);
   const [slideNumber, setSlideNumber] = useState(0);
 
@@ -38,6 +40,20 @@ export default function SingleEvent() {
     setSlideNumber(newSlideNumber);
   };
 
+  //Slider só aparece em desktop
+  const matches = useMediaQuery("(min-width: 1000px)");
+
+  useEffect(() => {
+    setOpen(false);
+    if (matches === true) {
+      setSlider(true);
+      setOpen(false);
+    } else {
+      setSlider(false);
+    }
+  }, [matches]);
+  //
+
   return (
     <>
       {loading ? (
@@ -46,7 +62,7 @@ export default function SingleEvent() {
         </div>
       ) : (
         <div className="singleEventWrapper">
-          {open && (
+          {slider && open && (
             <div className="singleEventSlider">
               <i
                 className="fa-solid fa-circle-xmark singleEventIconClose"
