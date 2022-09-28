@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import parse from "html-react-parser";
+import moment from "moment";
 import "./singlePost.css";
 
 export default function SinglePost() {
@@ -38,19 +39,21 @@ export default function SinglePost() {
             <span className="singlePostDate">{post.published_at}</span>
           </div>
           <div className="singlePostDesc">{parse(content)}</div>
-          <div className="singlePostEvent">
-            <span>
-              Event Related <br />
-              <Link to={`/events/${post.event_id}`} className="link">
-                <button
-                  type="button"
-                  className="btn btn-dark singlePostEventBtn"
-                >
-                  {post.event.name}
-                </button>
-              </Link>
-            </span>
-          </div>
+          {post.event_id && (
+            <div className="singlePostEvent">
+              <span>
+                Event Related <br />
+                <Link to={`/events/${post.event_id}`} className="link">
+                  <button
+                    type="button"
+                    className="btn btn-dark singlePostEventBtn"
+                  >
+                    {post.event.name}
+                  </button>
+                </Link>
+              </span>
+            </div>
+          )}
           <div className="singlePostInfo">
             <span className="singlePostAuthor">
               Category:{" "}
@@ -66,6 +69,59 @@ export default function SinglePost() {
                 </b>
               ))}
             </span>
+          </div>
+          <div className="singlePostCommentWrapper">
+            <h3 className="singlePostCommentCount">
+              Comments ({post.comments.length})
+            </h3>
+            {post.comments.map((comment) => (
+              <div key={comment.id} className="singlePostComment">
+                <div className="singlePostCommentInfo">
+                  <cite className="singlePostCommentName">{comment.name}</cite>
+                  <time>
+                    {moment.utc(comment.created_at).format("DD-MMM-YYYY HH:mm")}
+                  </time>
+                </div>
+                <div className="singlePostCommentBody">
+                  <p>{comment.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="singlePostCommentNewWrapper">
+            <h3 className="singlePostCommentNew">Add a New Comment</h3>
+            <form>
+              <div className="row">
+                <div className="form-group col-sm-12 col-md-6">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Name"
+                  />
+                </div>
+                <div className="form-group col-sm-12 col-md-6">
+                  <input
+                    type="email"
+                    className="form-control"
+                    placeholder="Email"
+                  />
+                </div>
+                <div className="form-group col-sm-12">
+                  <textarea
+                    type="textarea"
+                    className="form-control"
+                    placeholder="Message"
+                    rows="5"
+                  ></textarea>
+                </div>
+              </div>
+              <button
+                type="submit"
+                className="btn btn-dark singlePostCommentBtn"
+              >
+                Send
+              </button>
+            </form>
           </div>
         </div>
       )}

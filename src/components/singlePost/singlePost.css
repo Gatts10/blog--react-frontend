@@ -61,3 +61,52 @@
   font-weight: 500;
   margin-left: 5px;
 }
+
+.singlePostCommentWrapper {
+  padding-top: 100px;
+}
+
+.singlePostCommentCount {
+  font-family: "Lora", serif;
+}
+
+.singlePostComment {
+  padding-top: 30px;
+}
+
+.singlePostCommentInfo {
+  display: grid;
+}
+
+.singlePostCommentName {
+  font-family: "Varela Round", sans-serif;
+  font-weight: 600;
+}
+
+.singlePostCommentDate {
+  padding-top: 5px;
+  font-family: "Varela Round", sans-serif;
+  color: #666;
+}
+
+.singlePostCommentBody {
+  padding-top: 20px;
+  font-family: "Varela Round", sans-serif;
+}
+
+.singlePostCommentNewWrapper {
+  padding-top: 50px;
+}
+
+.singlePostCommentNew {
+  padding-bottom: 10px;
+}
+
+.form-group {
+  padding-bottom: 20px;
+}
+
+.singlePostCommentBtn {
+  width: 100%;
+  text-transform: uppercase;
+}
