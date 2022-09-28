@@ -16,16 +16,27 @@ export default function Home() {
   const [pageNumber, setPageNumber] = useState(1);
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      const res = await axios.get(
+    const abortCont = new AbortController();
+
+    axios
+      .get(
         `${
           import.meta.env.VITE_API
-        }/posts?page=${pageNumber}&category=${search}`
-      );
-      setPosts(res.data);
-      setLoading(false);
-    };
-    fetchPosts();
+        }/posts?page=${pageNumber}&category=${search}`,
+        {
+          signal: abortCont.signal,
+        }
+      )
+      .then((res) => {
+        // console.log(res.data);
+        setPosts(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        // console.log(err);
+      });
+
+    return () => abortCont.abort();
   }, [pageNumber, search]);
 
   const postsPerPage = posts.meta?.per_page;

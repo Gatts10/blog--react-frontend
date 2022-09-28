@@ -11,14 +11,22 @@ export default function Home() {
   const [pageNumber, setPageNumber] = useState(1);
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      const res = await axios.get(
-        `${import.meta.env.VITE_API}/posts?page=${pageNumber}`
-      );
-      setPosts(res.data);
-      setLoading(false);
-    };
-    fetchPosts();
+    const abortCont = new AbortController();
+
+    axios
+      .get(`${import.meta.env.VITE_API}/posts?page=${pageNumber}`, {
+        signal: abortCont.signal,
+      })
+      .then((res) => {
+        // console.log(res.data);
+        setPosts(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        // console.log(err);
+      });
+
+    return () => abortCont.abort();
   }, [pageNumber]);
 
   const postsPerPage = posts.meta?.per_page;

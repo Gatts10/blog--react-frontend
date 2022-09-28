@@ -11,14 +11,22 @@ export default function EventPage() {
   const [pageNumber, setPageNumber] = useState(1);
 
   useEffect(() => {
-    const fetchEvents = async () => {
-      const res = await axios.get(
-        `${import.meta.env.VITE_API}/events?page=${pageNumber}`
-      );
-      setEvents(res.data);
-      setLoading(false);
-    };
-    fetchEvents();
+    const abortCont = new AbortController();
+
+    axios
+      .get(`${import.meta.env.VITE_API}/events?page=${pageNumber}`, {
+        signal: abortCont.signal,
+      })
+      .then((res) => {
+        // console.log(res.data);
+        setEvents(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        // console.log(err);
+      });
+
+    return () => abortCont.abort();
   }, [pageNumber]);
 
   const eventsPerPage = events.meta?.per_page;

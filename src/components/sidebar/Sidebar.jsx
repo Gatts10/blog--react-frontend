@@ -8,11 +8,21 @@ export default function Sidebar() {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      const res = await axios.get(`${import.meta.env.VITE_API}/categories`);
-      setCategories(res.data);
-    };
-    fetchCategories();
+    const abortCont = new AbortController();
+
+    axios
+      .get(`${import.meta.env.VITE_API}/categories`, {
+        signal: abortCont.signal,
+      })
+      .then((res) => {
+        // console.log(res.data);
+        setCategories(res.data);
+      })
+      .catch((err) => {
+        // console.log(err);
+      });
+
+    return () => abortCont.abort();
   }, []);
 
   return (

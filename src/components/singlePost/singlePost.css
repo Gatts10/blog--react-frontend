@@ -106,7 +106,23 @@
   padding-bottom: 20px;
 }
 
+.error {
+  padding-top: 5px;
+  color: red;
+}
+
+.form-control:focus {
+  border-color: inherit;
+  box-shadow: inherit;
+}
+
 .singlePostCommentBtn {
   width: 100%;
   text-transform: uppercase;
+}
+
+.singlePostCommentAlert {
+  position: fixed;
+  right: 50px;
+  bottom: 50px;
 }

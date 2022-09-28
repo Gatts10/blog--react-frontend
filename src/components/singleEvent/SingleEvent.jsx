@@ -13,12 +13,22 @@ export default function SingleEvent() {
   const [slideNumber, setSlideNumber] = useState(0);
 
   useEffect(() => {
-    const fetchEvent = async () => {
-      const res = await axios.get(`${import.meta.env.VITE_API}/events/` + id);
-      setEvent(res.data);
-      setLoading(false);
-    };
-    fetchEvent();
+    const abortCont = new AbortController();
+
+    axios
+      .get(`${import.meta.env.VITE_API}/events/` + id, {
+        signal: abortCont.signal,
+      })
+      .then((res) => {
+        // console.log(res.data);
+        setEvent(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        // console.log(err);
+      });
+
+    return () => abortCont.abort();
   }, [id]);
 
   const handleOpen = (index) => {
